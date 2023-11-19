@@ -1,5 +1,6 @@
 import Table from '../src/components/Table'
 import SelectProd from '../src/components/SelectProd'
+import BasicModal from './components/Modal'
 
 const App = () => {
   return (
@@ -7,6 +8,7 @@ const App = () => {
       <h1>React App</h1>
       <Table />
       <SelectProd />
+      <BasicModal />
     </>
   )
 }
