@@ -1,0 +1,4 @@
+{
+    "version": 2,
+    "builds": [{ "src": "your-build-command", "use": "@vercel/node" }]
+  }
