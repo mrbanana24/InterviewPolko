@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Button from '../Button'
 import ButtonBox from '../ButtonBox';
 import { useEffect, useState } from 'react';
-import { getProducts, getArroces, getGaseosas, getFernets, getPanes, getCafes } from '../../assets/api'
+import { getProducts, getArroces, getGaseosas, getFernets, getPanes, getCafes, addArroz, addGaseosa, addFernet, addPan, addCafe } from '../../assets/api'
 
 export default function BasicTable() {
   const [productCounts, setProductCounts] = useState({
@@ -42,7 +42,51 @@ export default function BasicTable() {
     };
 
     fetchCounts();
-  }, []);
+  }, [productCounts]);
+
+  const handleAddProduct = (product) => {
+    // determinar que funcion llamar
+    let func;
+    switch (product) {
+      case 'Fernet':
+        func = addFernet;
+        break;
+      case 'Gaseosa':
+        func = addGaseosa;
+        break;
+      case 'Arroz':
+        func = addArroz;
+        break;
+      case 'Pan':
+        func = addPan;
+        break;
+      case 'Cafe':
+        func = addCafe;
+        break;
+      default:
+        break;
+    }
+
+    // llamar a la funcion
+    try{
+      func().then((res) => {
+        setProductCounts({
+          ...productCounts,
+          [product.toLowerCase()]: res.data.length,
+        });
+      });
+    }
+    catch(err){
+      console.log(err)
+    }
+
+  };
+
+  const handleRemoveProduct = (product) => {
+    console.log('remove')
+  };
+
+
 
   return (
     <TableContainer component={Paper}>
@@ -63,7 +107,11 @@ export default function BasicTable() {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {<ButtonBox mount={productCounts[product.toLowerCase()]}/>}
+              <ButtonBox
+                mount={productCounts[product.toLowerCase()]}
+                onAdd={() => handleAddProduct(product)}
+                onRemove={() => handleRemoveProduct(product)}
+              />
               </TableCell>
               <TableCell align="right">{product}</TableCell>
               <TableCell align="right">{'asd'}</TableCell>
