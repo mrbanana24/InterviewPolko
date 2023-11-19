@@ -8,36 +8,26 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '../Button'
 import ButtonBox from '../ButtonBox';
-import {useEffect} from 'react';
-import {getFernets} from '../../assets/api'
+import {useEffect, useState} from 'react';
+import {getProducts} from '../../assets/api'
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-
-const rows = [
-  createData(1, 159, 6.0, 24, 4.0),
-  createData(2, 237, 9.0, 37, 4.3),
-  createData(3, 262, 16.0, 24, 6.0),
-  createData(4, 305, 3.7, 67, 4.3),
-  createData(4, 356, 16.0, 49, 3.9),
-];
 
 export default function BasicTable() {
+  const [prod, setProd] = useState([]);
 
   useEffect(() => {
-    const FetchFernets = async () => {
-      const response = await getFernets();
-      console.log(response);
+    const FetchProducts = async () => {
+      const response = await getProducts();
+      console.log('Productos:',response);
+      setProd(response.data);
     };
-    FetchFernets();
+    FetchProducts();
   }, []);
 
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 650 }} aria-label="products table">
         <TableHead>
           <TableRow>
             <TableCell>Cantidad</TableCell>
@@ -48,17 +38,17 @@ export default function BasicTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {prod?.map((row) => (
             <TableRow
-              key={row.name}
+              key={row._id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
                 {<ButtonBox mount={2}/> }
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
+              <TableCell align="right">{row}</TableCell>
+              <TableCell align="right">{'asd'}</TableCell>
+              <TableCell align="right">{'as'}</TableCell>
               <TableCell align="right">{<Button/>}</TableCell>
             </TableRow>
           ))}

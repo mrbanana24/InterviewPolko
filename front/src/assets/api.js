@@ -52,4 +52,7 @@ export const getCafes = () => {
   return axios.get(`${url}/cafe`);
 }
 
-
+// Get all products
+export const getProducts = () => {
+  return axios.get(`${url}/products`);
+}
