@@ -1,4 +1,5 @@
 import * as React from 'react';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -50,7 +51,7 @@ const BasicModal = () => {
 
    return (
     <div>
-      <Button sx={styles.button} onClick={handleOpen}>Detalles de la compra!</Button>
+      <Button sx={styles.button} onClick={handleOpen}>Detalles de la compra! {<ShoppingCartCheckoutIcon/>} </Button>
       <Modal
         open={open}
         onClose={handleClose}
