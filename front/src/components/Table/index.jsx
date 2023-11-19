@@ -8,22 +8,41 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '../Button'
 import ButtonBox from '../ButtonBox';
-import {useEffect, useState} from 'react';
-import {getProducts} from '../../assets/api'
-
+import { useEffect, useState } from 'react';
+import { getProducts, getArroces, getGaseosas, getFernets, getPanes, getCafes } from '../../assets/api'
 
 export default function BasicTable() {
+  const [productCounts, setProductCounts] = useState({
+    fernet: 0,
+    gaseosa: 0,
+    arroz: 0,
+    pan: 0,
+    cafe: 0,
+  });
   const [prod, setProd] = useState([]);
 
   useEffect(() => {
-    const FetchProducts = async () => {
+    const fetchCounts = async () => {
+      const fernetData = await getFernets();
+      const gaseosaData = await getGaseosas();
+      const arrozData = await getArroces();
+      const panData = await getPanes();
+      const cafeData = await getCafes();
+
+      setProductCounts({
+        fernet: fernetData.data.length,
+        gaseosa: gaseosaData.data.length,
+        arroz: arrozData.data.length,
+        pan: panData.data.length,
+        cafe: cafeData.data.length,
+      });
+
       const response = await getProducts();
-      console.log('Productos:',response);
       setProd(response.data);
     };
-    FetchProducts();
-  }, []);
 
+    fetchCounts();
+  }, []);
 
   return (
     <TableContainer component={Paper}>
@@ -38,15 +57,15 @@ export default function BasicTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {prod?.map((row) => (
+          {prod?.map((product) => (
             <TableRow
-              key={row._id}
+              key={product}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {<ButtonBox mount={2}/> }
+                {<ButtonBox mount={productCounts[product.toLowerCase()]}/>}
               </TableCell>
-              <TableCell align="right">{row}</TableCell>
+              <TableCell align="right">{product}</TableCell>
               <TableCell align="right">{'asd'}</TableCell>
               <TableCell align="right">{'as'}</TableCell>
               <TableCell align="right">{<Button/>}</TableCell>
