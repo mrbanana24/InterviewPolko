@@ -159,3 +159,40 @@ app.get("/products", async (req, res) => {
       res.status(500).json({ error: "Error al obtener los tipos de productos" });
     }
   });
+
+// Cantidad total de items, y precio total {itemsTotal, priceTotal}
+app.get("/total", async (req, res) => {
+    try {
+        // Obtener todos los productos
+        const fernet = await Fernet.find();
+        const cafe = await Cafe.find();
+        const arroz = await Arroz.find();
+        const pan = await Pan.find();
+        const gaseosa = await Gaseosa.find();
+
+        // Obtener la cantidad de productos de cada tipo
+        const fernetTotal = fernet.length;
+        const cafeTotal = cafe.length;
+        const arrozTotal = arroz.length;
+        const panTotal = pan.length;
+        const gaseosaTotal = gaseosa.length;
+
+        // Obtener el precio total de cada tipo de producto
+        const fernetPrice = fernetTotal * 150;
+        const cafePrice = cafeTotal * 50;
+        const arrozPrice = arrozTotal * 100;
+        const panPrice = panTotal * 25;
+        const gaseosaPrice = gaseosaTotal * 80;
+
+        // Obtener el precio total de todos los productos
+        const priceTotal = fernetPrice + cafePrice + arrozPrice + panPrice + gaseosaPrice;
+
+        // Obtener la cantidad total de todos los productos
+        const itemsTotal = fernetTotal + cafeTotal + arrozTotal + panTotal + gaseosaTotal;
+
+        // Devolver la cantidad total de items y el precio total
+        res.json({itemsTotal, priceTotal});
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener la cantidad total de items y el precio total" });
+    }
+});

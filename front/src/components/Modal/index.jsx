@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { useState, useEffect } from 'react';
+import { getTotal } from '../../assets/api'
 
 const style = {
   position: 'absolute',
@@ -17,11 +19,24 @@ const style = {
 };
 
 const BasicModal = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [productsTotal, setProductsTotal] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  return (
+  useEffect(() => {
+    const fetchTotalData = async () => {
+      const response = await getTotal();
+      if (response && response.data) {
+        setProductsTotal(response.data.itemsTotal);
+        setTotalPrice(response.data.priceTotal);
+      }
+    }
+    fetchTotalData();
+  } ,[])
+
+   return (
     <div>
       <Button onClick={handleOpen}>Detalles de la compra!</Button>
       <Modal
@@ -32,15 +47,16 @@ const BasicModal = () => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Cantidad de items:
+            Cantidad de items: {productsTotal}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Precio total:
+            Precio total: {totalPrice}
           </Typography>
         </Box>
       </Modal>
     </div>
   );
 }
+
 
 export default BasicModal;

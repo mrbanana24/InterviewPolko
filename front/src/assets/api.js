@@ -111,7 +111,12 @@ export const getCafes = () => {
   return axios.get(`${url}/cafe`);
 }
 
+//////////////////////// Funciones para productos ////////////////////////
 // Get all products
 export const getProducts = () => {
   return axios.get(`${url}/products`);
+}
+
+export const getTotal = () => {
+  return axios.get(`${url}/total`);
 }

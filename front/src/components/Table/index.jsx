@@ -9,7 +9,27 @@ import Paper from '@mui/material/Paper';
 import Button from '../Button'
 import ButtonBox from '../ButtonBox';
 import { useEffect, useState } from 'react';
-import { getProducts, getArroces, getGaseosas, getFernets, getPanes, getCafes, addArroz, addGaseosa, addFernet, addPan, addCafe, deleteArroz, deleteCafe, deleteFernet, deleteGaseosa, deletePan, deleteAllArroces, deleteAllCafes, deleteAllFernets, deleteAllGaseosas, deleteAllPanes } from '../../assets/api'
+import { getProducts,
+         getArroces,
+         getGaseosas,
+         getFernets,
+         getPanes,
+         getCafes,
+         addArroz,
+         addGaseosa,
+         addFernet,
+         addPan,
+         addCafe,
+         deleteArroz,
+         deleteCafe,
+         deleteFernet,
+         deleteGaseosa,
+         deletePan,
+         deleteAllArroces,
+         deleteAllCafes,
+         deleteAllFernets,
+         deleteAllGaseosas,
+         deleteAllPanes } from '../../assets/api'
 
 export default function BasicTable() {
   const [productCounts, setProductCounts] = useState({
