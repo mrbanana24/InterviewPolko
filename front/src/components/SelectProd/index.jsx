@@ -10,12 +10,26 @@ import {handleClickFernet,
         handleClickPan,
         handleClickGaseosa} from './handleFunctions'
 
+
+const styles = {
+  form: {
+    position: 'flex',
+    top: '20%',
+    left: '50%',
+    transform: 'translate(-50%,-50%)',
+    boxShadow: 10,
+    width: 300,
+    marginTop: 15,
+    minWidth: 120,
+  }
+}
+
 export default function GroupedSelect() {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel htmlFor="grouped-select">Producto</InputLabel>
+      <FormControl sx={styles.form}>
+        <InputLabel htmlFor="grouped-select">Agregar Producto</InputLabel>
         <Select defaultValue="" id="grouped-select" label="Grouping">
           <ListSubheader>Bebidas</ListSubheader>
           <MenuItem value={1} onClick={handleClickGaseosa}>Gaseosa</MenuItem>

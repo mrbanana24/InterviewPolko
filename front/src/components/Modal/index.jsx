@@ -6,16 +6,28 @@ import Modal from '@mui/material/Modal';
 import { useState, useEffect } from 'react';
 import { getTotal } from '../../assets/api'
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
+const styles = {
+  modal: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%,-50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #ac9e9e',
+    boxShadow: 24,
+    p: 4
+  },
+  button: {
+    position: 'flex',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%,-50%)',
+    '&:hover': {
+      transform: 'translate(-50%,-50%) scale(1.05)',
+      boxShadow: 8,
+    },
+  },
 };
 
 const BasicModal = () => {
@@ -38,14 +50,14 @@ const BasicModal = () => {
 
    return (
     <div>
-      <Button onClick={handleOpen}>Detalles de la compra!</Button>
+      <Button sx={styles.button} onClick={handleOpen}>Detalles de la compra!</Button>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={styles.modal}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Cantidad de items: {productsTotal}
           </Typography>
