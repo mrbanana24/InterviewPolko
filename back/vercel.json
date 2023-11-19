@@ -1,4 +1,11 @@
 {
     "version": 2,
-    "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }]
+    "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }],
+    "routes": [
+        { "src": "/api", "dest": "http://localhost:3000/api" },
+        { "src": "/(.*)", "dest": "/$1" }
+    ],
+    "builds": [
+        { "src": "package.json", "use": "@now/static-build" }
+    ]
   }
