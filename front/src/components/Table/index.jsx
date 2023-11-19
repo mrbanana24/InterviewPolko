@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Button from '../Button'
 import ButtonBox from '../ButtonBox';
 import { useEffect, useState } from 'react';
-import { getProducts, getArroces, getGaseosas, getFernets, getPanes, getCafes, addArroz, addGaseosa, addFernet, addPan, addCafe } from '../../assets/api'
+import { getProducts, getArroces, getGaseosas, getFernets, getPanes, getCafes, addArroz, addGaseosa, addFernet, addPan, addCafe, deleteArroz, deleteCafe, deleteFernet, deleteGaseosa, deletePan } from '../../assets/api'
 
 export default function BasicTable() {
   const [productCounts, setProductCounts] = useState({
@@ -83,7 +83,40 @@ export default function BasicTable() {
   };
 
   const handleRemoveProduct = (product) => {
-    console.log('remove')
+    // determinar que funcion llamar
+    let func;
+    switch (product) {
+      case 'Fernet':
+        func = deleteFernet;
+        break;
+      case 'Gaseosa':
+        func = deleteGaseosa;
+        break;
+      case 'Arroz':
+        func = deleteArroz;
+        break;
+      case 'Pan':
+        func = deletePan;
+        break;
+      case 'Cafe':
+        func = deleteCafe;
+        break;
+      default:
+        break;
+    }
+
+    // llamar a la funcion
+    try{
+      func().then((res) => {
+        setProductCounts({
+          ...productCounts,
+          [product.toLowerCase()]: res.data.length,
+        });
+      });
+    }
+    catch(err){
+      console.log(err)
+    }
   };
 
 
