@@ -12,6 +12,11 @@ export const deleteArroz = () => {
   return axios.delete(`${url}/arroz`);
 }
 
+// Elimina todos los arroces
+export const deleteAllArroces = () => {
+  return axios.delete(`${url}/arroz/all`);
+}
+
 // Get para obtener todos los arroces
 export const getArroces = () => {
   return axios.get(`${url}/arroz`);
@@ -27,6 +32,11 @@ export const addGaseosa = () => {
 // Delete para eliminar la ultima gaseosa
 export const deleteGaseosa = () => {
   return axios.delete(`${url}/gaseosa`);
+}
+
+// Elimina todas las gaseosas
+export const deleteAllGaseosas = () => {
+  return axios.delete(`${url}/gaseosa/all`);
 }
 
 // Get para obtener todas las gaseosas
@@ -47,6 +57,11 @@ export const deleteFernet = () => {
   return axios.delete(`${url}/fernet`);
 }
 
+// Elimina todos los fernets
+export const deleteAllFernets = () => {
+  return axios.delete(`${url}/fernet/all`);
+}
+
 // Get para obtener todos los fernets
 export const getFernets = () => {
   return axios.get(`${url}/fernet`);
@@ -64,6 +79,11 @@ export const deletePan = () => {
   return axios.delete(`${url}/pan`);
 }
 
+// Elimina todos los panes
+export const deleteAllPanes = () => {
+  return axios.delete(`${url}/pan/all`);
+}
+
 // Get para obtener todos los panes
 export const getPanes = () => {
   return axios.get(`${url}/pan`);
@@ -79,6 +99,11 @@ export const addCafe = () => {
 // Delete para eliminar el ultimo cafe
 export const deleteCafe = () => {
   return axios.delete(`${url}/cafe`);
+}
+
+// Elimina todos los cafes
+export const deleteAllCafes = () => {
+  return axios.delete(`${url}/cafe/all`);
 }
 
 // Get para obtener todos los cafes

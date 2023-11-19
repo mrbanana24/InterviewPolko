@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Button from '../Button'
 import ButtonBox from '../ButtonBox';
 import { useEffect, useState } from 'react';
-import { getProducts, getArroces, getGaseosas, getFernets, getPanes, getCafes, addArroz, addGaseosa, addFernet, addPan, addCafe, deleteArroz, deleteCafe, deleteFernet, deleteGaseosa, deletePan } from '../../assets/api'
+import { getProducts, getArroces, getGaseosas, getFernets, getPanes, getCafes, addArroz, addGaseosa, addFernet, addPan, addCafe, deleteArroz, deleteCafe, deleteFernet, deleteGaseosa, deletePan, deleteAllArroces, deleteAllCafes, deleteAllFernets, deleteAllGaseosas, deleteAllPanes } from '../../assets/api'
 
 export default function BasicTable() {
   const [productCounts, setProductCounts] = useState({
@@ -19,30 +19,39 @@ export default function BasicTable() {
     pan: 0,
     cafe: 0,
   });
+
+  const [productPrices, setProductPrices] = useState({
+    fernet: 0,
+    gaseosa: 0,
+    arroz: 0,
+    pan: 0,
+    cafe: 0,
+  });
+
   const [prod, setProd] = useState([]);
 
   useEffect(() => {
     const fetchCounts = async () => {
-      const fernetData = await getFernets();
-      const gaseosaData = await getGaseosas();
-      const arrozData = await getArroces();
-      const panData = await getPanes();
-      const cafeData = await getCafes();
+      const fetchData = async (getFunc, product) => {
+        const data = await getFunc();
+        if (data && data.data && data.data.length > 0) {
+          setProductCounts(prev => ({ ...prev, [product]: data.data.length }));
+          setProductPrices(prev => ({ ...prev, [product]: data.data[0].precio }));
+        }
+      };
 
-      setProductCounts({
-        fernet: fernetData.data.length,
-        gaseosa: gaseosaData.data.length,
-        arroz: arrozData.data.length,
-        pan: panData.data.length,
-        cafe: cafeData.data.length,
-      });
+      await fetchData(getFernets, 'fernet');
+      await fetchData(getGaseosas, 'gaseosa');
+      await fetchData(getArroces, 'arroz');
+      await fetchData(getPanes, 'pan');
+      await fetchData(getCafes, 'cafe');
 
       const response = await getProducts();
       setProd(response.data);
     };
 
     fetchCounts();
-  }, [productCounts]);
+  }, [prod]);
 
   const handleAddProduct = (product) => {
     // determinar que funcion llamar
@@ -119,7 +128,42 @@ export default function BasicTable() {
     }
   };
 
+  const handleDeleteProduct = (product) => {
+    // determinar que funcion llamar
+    let func;
+    switch (product) {
+      case 'Fernet':
+        func = deleteAllFernets;
+        break;
+      case 'Gaseosa':
+        func = deleteAllGaseosas;
+        break;
+      case 'Arroz':
+        func = deleteAllArroces;
+        break;
+      case 'Pan':
+        func = deleteAllPanes;
+        break;
+      case 'Cafe':
+        func = deleteAllCafes;
+        break;
+      default:
+        break;
+    }
 
+    // llamar a la funcion
+    try{
+      func().then((res) => {
+        setProductCounts({
+          ...productCounts,
+          [product.toLowerCase()]: res.data.length,
+        });
+      });
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -134,24 +178,28 @@ export default function BasicTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {prod?.map((product) => (
-            <TableRow
-              key={product}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-              <ButtonBox
-                mount={productCounts[product.toLowerCase()]}
-                onAdd={() => handleAddProduct(product)}
-                onRemove={() => handleRemoveProduct(product)}
-              />
-              </TableCell>
-              <TableCell align="right">{product}</TableCell>
-              <TableCell align="right">{'asd'}</TableCell>
-              <TableCell align="right">{'as'}</TableCell>
-              <TableCell align="right">{<Button/>}</TableCell>
-            </TableRow>
-          ))}
+          {prod?.map((product) => {
+            const cantidad = productCounts[product.toLowerCase()];
+            const precio = productPrices[product.toLowerCase()];
+            const subtotal = precio;
+            const total = precio * cantidad || 0;
+
+            return (
+              <TableRow key={product}>
+                <TableCell component="th" scope="row">
+                  <ButtonBox
+                    mount={cantidad}
+                    onAdd={() => handleAddProduct(product)}
+                    onRemove={() => handleRemoveProduct(product)}
+                  />
+                </TableCell>
+                <TableCell align="right">{product}</TableCell>
+                <TableCell align="right">{subtotal}</TableCell>
+                <TableCell align="right">{total}</TableCell>
+                <TableCell align="right">{<Button handleQuitProduct={() => handleDeleteProduct(product)} />}</TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>
