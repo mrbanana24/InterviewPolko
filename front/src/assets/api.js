@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 const url = 'http://localhost:8000';
 
 
@@ -13,8 +13,8 @@ export const getArroces = () => {
 }
 
 // Post para agregar una gaseosa
-export const addGaseosa = (gaseosa) => {
-  return axios.post(`${url}/gaseosa`, gaseosa);
+export const addGaseosa = () => {
+  return axios.post(`${url}/gaseosa`);
 }
 
 // Get para obtener todas las gaseosas
@@ -23,8 +23,8 @@ export const getGaseosas = () => {
 }
 
 // Post para agregar un fernet
-export const addFernet = (fernet) => {
-  return axios.post(`${url}/fernet`, fernet);
+export const addFernet = () => {
+  return axios.post(`${url}/fernet`);
 }
 
 // Get para obtener todos los fernets
@@ -33,8 +33,8 @@ export const getFernets = () => {
 }
 
 // Post para agregar un pan
-export const addPan = (pan) => {
-  return axios.post(`${url}/pan`, pan);
+export const addPan = () => {
+  return axios.post(`${url}/pan`);
 }
 
 // Get para obtener todos los panes
@@ -42,10 +42,9 @@ export const getPanes = () => {
   return axios.get(`${url}/pan`);
 }
 
-
 // Post para agregar un cafe
-export const addCafe = (cafe) => {
-  return axios.post(`${url}/cafe`, cafe);
+export const addCafe = () => {
+  return axios.post(`${url}/cafe`);
 }
 
 // Get para obtener todos los cafes

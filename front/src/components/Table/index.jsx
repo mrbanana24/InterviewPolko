@@ -8,10 +8,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '../Button'
 import ButtonBox from '../ButtonBox';
+import {useEffect} from 'react';
+import {getFernets} from '../../assets/api'
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
+
 
 const rows = [
   createData(1, 159, 6.0, 24, 4.0),
@@ -22,6 +25,16 @@ const rows = [
 ];
 
 export default function BasicTable() {
+
+  useEffect(() => {
+    const FetchFernets = async () => {
+      const response = await getFernets();
+      console.log(response);
+    };
+    FetchFernets();
+  }, []);
+
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
