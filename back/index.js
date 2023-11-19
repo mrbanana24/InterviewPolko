@@ -34,6 +34,9 @@ app.listen(port, () => {
 
 
 // Api endpoints
+app.get("/", (req, res) => {
+  res.send("Hello world");
+});
 
 // Fernet
 app.get("/fernet", async (req, res) => {
